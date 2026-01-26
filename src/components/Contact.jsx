@@ -7,7 +7,9 @@ import './Contact.css';
 const Contact = () => {
     // User content
     const email = "ketulpanchal5@gmail.com";
-    const linkedinUrl = "https://linkedin.com/in/ketul-panchal"; // Placeholder
+    const linkedinUrl = "https://www.linkedin.com/in/ketul10";
+    const githubUrl = "https://github.com/ketul-panchal";
+    const myResume = "https://drive.google.com/file/d/1UbK2JWwgEFSIuvong6QYrl3cVxq-nBd7/view?usp=sharing";
 
     return (
         <section id="contact" className="contact-section">
@@ -78,8 +80,8 @@ const Contact = () => {
                             <p className="profile-role">Full-Stack & Flutter Developer</p>
                             <div className="profile-socials">
                                 <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><SiLinkedin /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer"><SiGithub /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer"><SiInstagram /></a>
+                                <a href={githubUrl} target="_blank" rel="noopener noreferrer"><SiGithub /></a>
+                                {/* <a href="#" target="_blank" rel="noopener noreferrer"><SiInstagram /></a> */}
                             </div>
                         </div>
                     </motion.div>
@@ -103,12 +105,12 @@ const Contact = () => {
 
                         {/* LinkedIn Button (Replacing Behance) */}
                         <a
-                            href={linkedinUrl}
+                            href={myResume}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="linkedin-cta"
                         >
-                            <span>My LinkedIn</span>
+                            <span>My Resume</span>
                             <FiArrowUpRight className="arrow-icon" />
                         </a>
                     </motion.div>
@@ -125,7 +127,7 @@ const Contact = () => {
                     Copyright © 2026 Ketul Portfolio
                 </div>
                 <div className="footer-right">
-                    <span>Built with ❤️ in React</span>
+                    <span>Built with ❤️</span>
                 </div>
             </div>
         </section>
