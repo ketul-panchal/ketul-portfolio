@@ -73,7 +73,7 @@ const Contact = () => {
                     >
                         <div className="profile-image-wrapper">
                             {/* Using one of the user's images */}
-                            <img src="/assets/IMG_20251022_131142.jpg" alt="Ketul" className="profile-image" />
+                            <img src="assets/IMG_20251022_131142.jpg" alt="Ketul" className="profile-image" />
                         </div>
                         <div className="profile-info">
                             <h3 className="profile-name">Ketul</h3>
