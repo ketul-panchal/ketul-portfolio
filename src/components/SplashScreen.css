@@ -1,0 +1,42 @@
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0a0a0a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.splash-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.splash-ball {
+  width: 20px;
+  height: 20px;
+  background-color: #ff6b4a;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 107, 74, 0.6);
+  z-index: 10;
+}
+
+.splash-text {
+  font-family: 'Inter', sans-serif;
+  color: #ff6b4a;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-top: 20px;
+  position: absolute;
+  top: 40px; /* Position below the bouncing area */
+}

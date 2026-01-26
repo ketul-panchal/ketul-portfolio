@@ -1,0 +1,884 @@
+/* ==================== HERO SECTION ==================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Add this for smoother scroll behavior */
+.home {
+  scroll-behavior: smooth;
+}
+
+/* Background Grid */
+.hero-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Particles */
+.hero-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-particles .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(135deg, #ff6b4a, #ff8c5a);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+/* ==================== HERO CONTENT ==================== */
+.hero-content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 0 20px;
+}
+
+/* ==================== GREETING TEXT (Top - Closer) ==================== */
+.hero-greeting {
+  position: absolute;
+  top: 220px;
+  left: 2%;
+  transform: translateX(-50%);
+  z-index: 20;
+}
+
+.greeting-text {
+  font-size: clamp(12px, 1.5vw, 16px);
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: #ff6b4a;
+  text-transform: uppercase;
+}
+
+/* ==================== HERO MAIN SECTION ==================== */
+.hero-main {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* ==================== BIG BACKGROUND TEXT - Improved Visibility ==================== */
+.big-text {
+  position: absolute;
+  display: flex;
+  font-size: clamp(80px, 16vw, 220px);
+  font-weight: 900;
+  letter-spacing: -6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  will-change: transform;
+}
+
+.big-letter {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.06);
+  text-shadow: 
+    0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 40px rgba(255, 107, 74, 0.05);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  text-stroke: 1px rgba(255, 255, 255, 0.08);
+}
+
+.left-big-text {
+  left: 0;
+  top: 15%;
+  transform: translateY(-50%);
+}
+
+.right-big-text {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ==================== ID CARD CONTAINER ==================== */
+.id-card-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+/* ==================== LANYARD ==================== */
+.lanyard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 11;
+}
+
+.lanyard-strap {
+  width: 36px;
+  height: 60px;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #2a2a2a 20%,
+    #1a1a1a 40%,
+    #2a2a2a 60%,
+    #1a1a1a 80%,
+    #2a2a2a 100%
+  );
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow:
+    inset 2px 0 4px rgba(0, 0, 0, 0.5),
+    inset -2px 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.lanyard-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+  transform: rotate(180deg);
+}
+
+.lanyard-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.connector-clip {
+  width: 30px;
+  height: 18px;
+  background: linear-gradient(180deg, #333 0%, #1a1a1a 100%);
+  border-radius: 0 0 6px 6px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.connector-clip::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: #555;
+  border-radius: 2px;
+}
+
+/* ==================== ID CARD ==================== */
+.id-card {
+  position: relative;
+  width: 300px;
+  height: 420px;
+  background: linear-gradient(
+    165deg,
+    #14141f 0%,
+    #1a1a2e 50%,
+    #0f0f1a 100%
+  );
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform-style: preserve-3d;
+}
+
+.card-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-glow {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(135deg, rgba(255, 107, 74, 0.4), rgba(255, 140, 90, 0.2), rgba(255, 107, 74, 0.4));
+  border-radius: 23px;
+  z-index: -1;
+  filter: blur(15px);
+  opacity: 0.5;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+/* ==================== PHOTO SECTION ==================== */
+.photo-section {
+  position: relative;
+  flex: 1;
+  background: linear-gradient(135deg, #ff6b4a 0%, #ff8c5a 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.photo-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(100%) contrast(1.1);
+  mix-blend-mode: multiply;
+}
+
+/* ==================== CARD INFO SECTION ==================== */
+.card-info {
+  padding: 20px 24px 16px;
+  background: linear-gradient(180deg, #14141f 0%, #0f0f1a 100%);
+}
+
+.role-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.role-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.role-title span {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* ==================== BARCODE SECTION ==================== */
+.card-barcode {
+  padding: 12px 24px 20px;
+  background: #0f0f1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.barcode-container {
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+  padding: 6px 0;
+}
+
+.barcode-line {
+  height: 20px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.barcode-text {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+
+/* ==================== DESCRIPTION (Below Card) ==================== */
+.hero-description {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 50px;
+  z-index: 20;
+  text-align: center;
+}
+
+.description-prefix {
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.description-dynamic {
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* TextScramble styling */
+.scramble-text {
+  display: inline-block;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff6b4a, #ff8c5a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.scramble-text.scrambling {
+  opacity: 0.9;
+}
+
+/* ==================== BOTTOM SECTION ==================== */
+.hero-bottom {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  z-index: 20;
+}
+
+/* Page Number */
+.page-number {
+  display: flex;
+  align-items: center;
+}
+
+.number-circle {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll-arrow {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.scroll-arrow:hover {
+  border-color: #ff6b4a;
+  color: #ff6b4a;
+}
+
+/* Branding */
+.hero-branding {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.branding-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.branding-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+.branding-name .accent {
+  color: #ff6b4a;
+}
+
+/* ==================== DECORATIONS ==================== */
+.hero-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 107, 74, 0.15);
+}
+
+.deco-1 {
+  top: 15%;
+  left: 8%;
+  width: 120px;
+  height: 120px;
+}
+
+.deco-2 {
+  bottom: 20%;
+  right: 8%;
+  width: 180px;
+  height: 180px;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Large Desktop */
+@media (min-width: 1600px) {
+  .big-text {
+    font-size: 260px;
+  }
+
+  .id-card {
+    width: 340px;
+    height: 480px;
+  }
+
+  .role-title span {
+    font-size: 32px;
+  }
+
+  .hero-description {
+    margin-top: 60px;
+  }
+
+  .description-dynamic {
+    font-size: 32px;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1400px) {
+  .big-text {
+    font-size: clamp(70px, 14vw, 180px);
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .hero-greeting {
+    top: 100px;
+  }
+
+  .hero-bottom {
+    padding: 0 40px;
+    bottom: 30px;
+  }
+
+  .big-text {
+    font-size: clamp(50px, 12vw, 140px);
+    letter-spacing: -4px;
+  }
+
+  .id-card {
+    width: 280px;
+    height: 380px;
+  }
+
+  .role-title span {
+    font-size: 24px;
+  }
+
+  .hero-description {
+    margin-top: 40px;
+  }
+
+  .description-dynamic {
+    font-size: 22px;
+  }
+}
+
+/* Mobile Landscape & Small Tablets */
+@media (max-width: 768px) {
+  .hero-greeting {
+    top: 100px;
+  }
+
+  .big-text {
+    font-size: clamp(40px, 15vw, 100px);
+    letter-spacing: -2px;
+  }
+
+  .big-letter {
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-bottom {
+    padding: 0 20px;
+    bottom: 20px;
+  }
+
+  .id-card {
+    width: 260px;
+    height: 360px;
+  }
+
+  .card-info {
+    padding: 16px 20px 12px;
+  }
+
+  .role-title span {
+    font-size: 22px;
+  }
+
+  .card-barcode {
+    padding: 10px 20px 16px;
+  }
+
+  .lanyard-strap {
+    height: 50px;
+  }
+
+  .number-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 11px;
+  }
+
+  .scroll-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hero-description {
+    margin-top: 35px;
+  }
+
+  .description-prefix {
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+
+  .description-dynamic {
+    font-size: 18px;
+    min-height: 30px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-greeting {
+    top: 90px;
+  }
+
+  .greeting-text {
+    font-size: 11px;
+  }
+
+  .big-text {
+    font-size: clamp(35px, 18vw, 70px);
+    letter-spacing: -1px;
+  }
+
+  .id-card {
+    width: 240px;
+    height: 340px;
+  }
+
+  .card-info {
+    padding: 14px 18px 10px;
+  }
+
+  .role-label {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+
+  .role-title span {
+    font-size: 20px;
+  }
+
+  .card-barcode {
+    padding: 8px 18px 14px;
+  }
+
+  .barcode-line {
+    height: 16px;
+  }
+
+  .barcode-text {
+    font-size: 7px;
+  }
+
+  .lanyard-strap {
+    height: 45px;
+    width: 32px;
+  }
+
+  .lanyard-text {
+    font-size: 7px;
+  }
+
+  .hero-bottom {
+    padding: 0 16px;
+    bottom: 16px;
+  }
+
+  .number-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .scroll-arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .scroll-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .branding-label {
+    font-size: 9px;
+  }
+
+  .branding-name {
+    font-size: 12px;
+  }
+
+  .hero-description {
+    margin-top: 30px;
+  }
+
+  .description-prefix {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .description-dynamic {
+    font-size: 16px;
+    min-height: 26px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+  .big-text {
+    font-size: 30px;
+  }
+
+  .id-card {
+    width: 220px;
+    height: 310px;
+  }
+
+  .role-title span {
+    font-size: 18px;
+  }
+
+  .card-info {
+    padding: 12px 16px 8px;
+  }
+
+  .lanyard-strap {
+    height: 40px;
+    width: 28px;
+  }
+
+  .hero-description {
+    margin-top: 25px;
+  }
+
+  .description-dynamic {
+    font-size: 14px;
+  }
+}
+
+/* Height-based adjustments */
+@media (max-height: 700px) {
+  .hero-greeting {
+    top: 80px;
+  }
+
+  .id-card {
+    width: 240px;
+    height: 320px;
+  }
+
+  .lanyard-strap {
+    height: 40px;
+  }
+
+  .hero-bottom {
+    bottom: 20px;
+  }
+
+  .hero-description {
+    margin-top: 25px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-greeting {
+    top: 60px;
+  }
+
+  .id-card {
+    width: 200px;
+    height: 280px;
+  }
+
+  .lanyard-strap {
+    height: 30px;
+  }
+
+  .card-info {
+    padding: 10px 14px 8px;
+  }
+
+  .role-title span {
+    font-size: 16px;
+  }
+
+  .hero-bottom {
+    bottom: 10px;
+    padding: 0 20px;
+  }
+
+  .hero-description {
+    margin-top: 15px;
+  }
+
+  .description-prefix {
+    font-size: 10px;
+  }
+
+  .description-dynamic {
+    font-size: 14px;
+  }
+}
+
+/* High Resolution Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .big-letter {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-particles .particle,
+  .scroll-arrow {
+    animation: none;
+  }
+
+  .card-shine {
+    display: none;
+  }
+}
+
+/* ==================== HOVER EFFECTS ==================== */
+.id-card:hover .card-glow {
+  opacity: 0.7;
+  filter: blur(20px);
+  transition: all 0.4s ease;
+}
+
+.id-card:hover .card-photo {
+  filter: grayscale(80%) contrast(1.15);
+  transition: all 0.4s ease;
+}
+
+.photo-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to top, #14141f, transparent);
+  pointer-events: none;
+}

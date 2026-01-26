@@ -1,0 +1,184 @@
+/* ==================== CUSTOM CURSOR ==================== */
+
+/* Hide default cursor globally */
+* {
+  cursor: none !important;
+}
+
+/* Restore cursor on inputs and textareas for usability */
+input,
+textarea,
+select {
+  cursor: auto !important;
+}
+
+/* ==================== CURSOR DOT ==================== */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+.dot-inner {
+  width: 100%;
+  height: 100%;
+  background: #ff6b4a;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px rgba(255, 107, 74, 0.5),
+    0 0 20px rgba(255, 107, 74, 0.3);
+}
+
+.cursor-dot.clicking .dot-inner {
+  background: #ffffff;
+}
+
+.cursor-dot.card .dot-inner,
+.cursor-dot.view .dot-inner {
+  background: #ffffff;
+}
+
+/* ==================== CURSOR FOLLOWER ==================== */
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-follower::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid rgba(255, 107, 74, 0.6);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.cursor-follower.hover::before {
+  border-color: #ff6b4a;
+  border-width: 2px;
+}
+
+.cursor-follower.card::before {
+  border-color: rgba(255, 255, 255, 0.4);
+  border-style: dashed;
+}
+
+.cursor-follower.view::before {
+  border-color: #ff6b4a;
+  background: rgba(255, 107, 74, 0.9);
+  border-width: 0;
+}
+
+/* Cursor Text */
+.cursor-text {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Magnetic effect for cards */
+.cursor-magnetic {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(255, 107, 74, 0.3);
+  border-radius: 50%;
+}
+
+/* ==================== CURSOR TRAIL ==================== */
+.cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 99997;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 107, 74, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+/* ==================== CLICK PARTICLES ==================== */
+.click-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 99996;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(255, 107, 74, 0.6);
+  border-radius: 50%;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px),
+       (hover: none) {
+  .cursor-dot,
+  .cursor-follower,
+  .cursor-trail,
+  .click-particles {
+    display: none !important;
+  }
+
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-follower,
+  .cursor-trail {
+    transition: none;
+  }
+  
+  .cursor-magnetic {
+    animation: none;
+  }
+}
+
+/* ==================== SPECIAL STATES ==================== */
+
+/* When hovering over ID card */
+.cursor-follower.card {
+  mix-blend-mode: difference;
+}
+
+/* Link hover state */
+.cursor-follower.hover {
+  mix-blend-mode: normal;
+}
+
+/* Blend mode adjustments for dark backgrounds */
+@media (prefers-color-scheme: dark) {
+  .cursor-dot {
+    mix-blend-mode: difference;
+  }
+}
