@@ -6,10 +6,10 @@ import './About.css';
 
 // Importing images
 const images = [
-    '/assets/IMG20251024215956.jpg',
-    '/assets/IMG20251024215959.jpg',
-    '/assets/IMG_20251022_131142.jpg',
-    '/assets/IMG_20251023_005915.jpg'
+    import.meta.env.BASE_URL + 'assets/IMG20251024215956.jpg',
+    import.meta.env.BASE_URL + 'assets/IMG20251024215959.jpg',
+    import.meta.env.BASE_URL + 'assets/IMG_20251022_131142.jpg',
+    import.meta.env.BASE_URL + 'assets/IMG_20251023_005915.jpg'
 ];
 
 const About = () => {

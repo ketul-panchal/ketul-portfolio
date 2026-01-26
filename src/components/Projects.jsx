@@ -143,7 +143,7 @@ const ProjectCard = ({ project, index, isLast }) => {
             <div className="project-card-visual">
                 {project.image ? (
                     <img
-                        src={project.image}
+                        src={import.meta.env.BASE_URL + project.image}
                         alt={project.name}
                         className="project-card-image"
                         onError={(e) => {

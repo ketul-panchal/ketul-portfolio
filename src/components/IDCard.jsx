@@ -110,7 +110,7 @@ const IDCard = () => {
           <div className="card-photo-section">
             <div className="photo-frame">
               <motion.img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+                src="/assets/images/me.png"
                 alt="Ketul Panchal"
                 className="card-photo"
                 whileHover={{ scale: 1.1 }}

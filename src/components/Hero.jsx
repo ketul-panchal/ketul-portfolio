@@ -226,7 +226,7 @@ const Hero = () => {
                 >
                   <div className="photo-frame">
                     <img
-                      src="/assets/me.png"
+                      src="assets/me.png"
                       alt="Ketul Panchal"
                       className="card-photo"
                     />
