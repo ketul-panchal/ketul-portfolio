@@ -599,6 +599,10 @@
     height: 360px;
   }
 
+  .id-card-container {
+      margin-top: -80px;
+  }
+
   .card-info {
     padding: 16px 20px 12px;
   }
@@ -612,7 +616,7 @@
   }
 
   .lanyard-strap {
-    height: 50px;
+    height: 200px;
   }
 
   .number-circle {
@@ -682,6 +686,11 @@
     padding: 8px 18px 14px;
   }
 
+  /* Pull container up so card isn't too low */
+  .id-card-container {
+    margin-top: -120px;
+  }
+
   .barcode-line {
     height: 16px;
   }
@@ -691,7 +700,7 @@
   }
 
   .lanyard-strap {
-    height: 45px;
+    height: 180px;
     width: 32px;
   }
 
@@ -763,7 +772,7 @@
   }
 
   .lanyard-strap {
-    height: 40px;
+    height: 160px;
     width: 28px;
   }
 

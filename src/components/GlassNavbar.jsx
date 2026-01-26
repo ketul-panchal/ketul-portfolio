@@ -84,14 +84,14 @@ const GlassNavbar = () => {
         redOffset: 3,
         greenOffset: 8,
         blueOffset: 12,
-        mixBlendMode: 'screen'
+        mixBlendMode: 'normal'
     };
 
     return (
         <header className="glass-navbar-wrapper">
             <motion.div
                 ref={navRef}
-                className={`glass-navbar-outer ${scrolled ? 'scrolled' : ''}`}
+                className={`glass-navbar-container ${scrolled ? 'scrolled' : ''}`}
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -251,7 +251,7 @@ const GlassNavbar = () => {
                                             >
                                                 <span className="mobile-link-number">0{index + 1}</span>
                                                 <span className="mobile-link-text">{item.label}</span>
-                                                <motion.span 
+                                                <motion.span
                                                     className="mobile-link-arrow"
                                                     initial={{ x: -5, opacity: 0 }}
                                                     whileHover={{ x: 0, opacity: 1 }}

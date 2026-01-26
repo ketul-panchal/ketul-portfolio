@@ -108,7 +108,7 @@ const ProjectCard = ({ project, index, isLast }) => {
 
                 <p className="project-card-description">{project.description}</p>
 
-                <div className="project-card-actions">
+                {/* <div className="project-card-actions">
                     {project.url && project.url !== '#' && (
                         <a
                             href={project.url}
@@ -136,7 +136,7 @@ const ProjectCard = ({ project, index, isLast }) => {
                             <span>Code</span>
                         </a>
                     )}
-                </div>
+                </div> */}
             </div>
 
             {/* Right Side - Image */}

@@ -11,8 +11,13 @@
   min-height: 100dvh;
   /* background #000 hides the previous card behind the rounded corners of the next card */
   /* background: #000; */
+  background: linear-gradient(
+  to bottom,
+  transparent 0%,
+  rgba(0, 0, 0, 1) 100%
+  );
   /* Fix for vibration/jank on mobile */
-  transform: translate3d(0, 0, 0); 
+  transform: translate3d(0, 0, 0);  
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   will-change: transform;
