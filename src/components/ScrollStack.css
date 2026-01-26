@@ -8,20 +8,25 @@
   top: 0;
   width: 100%;
   min-height: 100vh;
-  border-radius: 40px 40px 0 0;
-  overflow: hidden;
-  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.3);
+  min-height: 100dvh;
+  /* background #000 hides the previous card behind the rounded corners of the next card */
+  /* background: #000; */
+  /* Fix for vibration/jank on mobile */
+  transform: translate3d(0, 0, 0); 
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
-/* First card no top radius */
-.scroll-stack-card:first-child {
-  border-radius: 0;
+/* Last card styles removed here, handled in component to ensure proper radius */
+.scroll-stack-card:last-child {
+  height: auto;
+  min-height: 100vh;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .scroll-stack-card {
-    min-height: auto;
-    border-radius: 24px 24px 0 0;
+    /* Reset radius logic if any remains */
   }
 }

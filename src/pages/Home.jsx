@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
+import Contact from '../components/Contact';
 
 const Home = () => {
   return (
@@ -14,15 +15,7 @@ const Home = () => {
       <About />
       <Skills />
       <Projects />
-
-      <section id="contact" style={{
-        minHeight: '100vh',
-        padding: '100px 10%',
-        background: '#0a0a0a',
-        color: '#fff'
-      }}>
-        <h2 style={{ fontSize: '3rem' }}>Contact Section</h2>
-      </section>
+      <Contact />
     </div>
   );
 };

@@ -166,7 +166,7 @@ const About = () => {
                         </motion.div>
 
                         {/* CTA Button */}
-                        <motion.div
+                        {/* <motion.div
                             className="about-cta"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -179,7 +179,7 @@ const About = () => {
                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </a>
-                        </motion.div>
+                        </motion.div> */}
                     </div>
 
                     {/* Right Column: Stack Gallery */}
