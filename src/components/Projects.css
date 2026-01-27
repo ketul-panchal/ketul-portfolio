@@ -270,13 +270,24 @@
   }
 
   .project-card-info {
-    padding: 90px 6% 40px;
+    padding: 90px 6% 30px;
     height: auto;
   }
   
   .project-card-title {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+  }
+  
+  /* Reduce tech tags spacing on mobile */
+  .project-card-tech {
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tech-tag {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
   }
   
   .project-card-description {
@@ -324,12 +335,90 @@
   }
 }
 
+/* Small mobile screens */
 @media (max-width: 480px) {
+  .projects-marquee-container {
+    padding: 40px 0 30px;
+  }
+  
   .project-card-info {
-    padding: 80px 5% 20px;
+    padding: 70px 4% 15px;
+  }
+  
+  .project-card-title {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  /* Even smaller tech tags on small screens */
+  .project-card-tech {
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tech-tag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+  
+  .project-card-description {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
   }
   
   .project-card-image {
-     margin-top: 20px;
+    margin-top: 15px;
+    padding: 0 15px 35px;
+  }
+  
+  .project-arrow-link {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* Extra small mobile screens (320px - 360px) */
+@media (max-width: 360px) {
+  .project-card-info {
+    padding: 60px 3% 10px;
+  }
+  
+  .project-card-title {
+    font-size: 1.7rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  /* Compact tech tags for very small screens */
+  .project-card-tech {
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .tech-tag {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.7rem;
+  }
+  
+  .project-card-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+  
+  .project-card-image {
+    margin-top: 10px;
+    padding: 0 10px 30px;
+  }
+  
+  .project-arrow-link {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    bottom: 15px;
+    right: 15px;
   }
 }
