@@ -26,7 +26,7 @@ export const projects = [
     name: "Digital QR Code Restaurant Menu Maker & Contactless Ordering System",
     techStack: "ReactJs, NodeJs, ExpressJs, MongoDB",
     description:
-      "Digital QR Code Restaurant Menu Maker & Contactless Ordering System is a web application that allows restaurant owners to create QR code menus for their customers. Customers can scan the QR code and view the menu on their mobile devices. They can also place orders.",
+      "web application that allows restaurant owners to create QR code menus for their customers. Customers can scan the QR code and view the menu on their mobile devices. They can also place orders.",
     url: "https://github.com/ketul-panchal/quickqr-saas",
     image: "assets/project/Gemini_Generated_Image_6habqa6habqa6hab-Photoroom.png", // Main project image
     galleryImages: [], // Optional additional images
