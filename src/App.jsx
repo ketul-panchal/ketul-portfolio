@@ -1,28 +1,36 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import Home from './pages/Home';
-import CustomCursor from './components/CustomCursor';
-import SplashScreen from './components/SplashScreen';
-import SmoothScroll from './components/SmoothScroll';
+import ErrorBoundary from './components/ErrorBoundary';
+import CustomCursor from './components/ui/CustomCursor';
+import SplashScreen from './components/layout/SplashScreen';
+import SmoothScroll from './components/layout/SmoothScroll';
 import './styles/index.css';
+
+// Lazy-load the main page so the splash screen renders immediately
+// and the heavy section JS is only parsed after the loader exits.
+const Home = lazy(() => import('./pages/Home'));
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="App">
-      <CustomCursor />
+    <ErrorBoundary>
+      <div className="App">
+        <CustomCursor />
 
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <SplashScreen key="splash" onComplete={() => setLoading(false)} />
-        ) : (
-          <SmoothScroll key="content">
-            <Home />
-          </SmoothScroll>
-        )}
-      </AnimatePresence>
-    </div>
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <SplashScreen key="splash" onComplete={() => setLoading(false)} />
+          ) : (
+            <SmoothScroll key="content">
+              <Suspense fallback={null}>
+                <Home />
+              </Suspense>
+            </SmoothScroll>
+          )}
+        </AnimatePresence>
+      </div>
+    </ErrorBoundary>
   );
 }
 

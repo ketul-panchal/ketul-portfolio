@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import TextScramble from './TextScramble';
+import TextScramble from '../ui/TextScramble';
 import './Hero.css';
 
 const Hero = () => {

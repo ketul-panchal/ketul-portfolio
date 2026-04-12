@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import ScrollReveal from './ScrollReveal';
-import Stack from './Stack';
+import ScrollReveal from '../ui/ScrollReveal';
+import Stack from '../ui/Stack';
 import './About.css';
 
 // Importing images

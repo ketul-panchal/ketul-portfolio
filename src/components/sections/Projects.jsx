@@ -1,5 +1,5 @@
-import { projects } from '../data/projectsData';
-import ScrollStack, { ScrollStackItem } from './ScrollStack';
+import { projects } from '../../data/projectsData';
+import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
 import { FiExternalLink, FiGithub, FiArrowUpRight } from 'react-icons/fi';
 import './Projects.css';
 import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue } from 'framer-motion';

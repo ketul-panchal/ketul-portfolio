@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import GlassSurface from './GlassSurface';
+import GlassSurface from '../ui/GlassSurface';
 import './GlassNavbar.css';
 
 const NAV_ITEMS = [
