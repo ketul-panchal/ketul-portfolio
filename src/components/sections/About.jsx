@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../ui/ScrollReveal';
 import Stack from '../ui/Stack';
+import ProtectedImage from '../ui/ProtectedImage';
 import './About.css';
 
 // Importing images
@@ -19,11 +20,11 @@ const About = () => {
 
     // Create card content for Stack component
     const stackCards = images.map((src, i) => (
-        <img
+        <ProtectedImage
             key={i}
             src={src}
             alt={`Ketul - ${i + 1}`}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%' }}
         />
     ));
 

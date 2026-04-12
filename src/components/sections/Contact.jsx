@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { SiLinkedin, SiGithub, SiInstagram } from 'react-icons/si';
 import { FiArrowUpRight, FiMail } from 'react-icons/fi';
+import ProtectedImage from '../ui/ProtectedImage';
 import './Contact.css';
 
 const Contact = () => {
@@ -73,7 +74,7 @@ const Contact = () => {
                     >
                         <div className="profile-image-wrapper">
                             {/* Using one of the user's images */}
-                            <img src="assets/IMG_20251022_131142.jpg" alt="Ketul" className="profile-image" />
+                            <ProtectedImage src="assets/IMG_20251022_131142.jpg" alt="Ketul" className="profile-image" />
                         </div>
                         <div className="profile-info">
                             <h3 className="profile-name">Ketul</h3>

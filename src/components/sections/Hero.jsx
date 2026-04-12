@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import TextScramble from '../ui/TextScramble';
+import ProtectedImage from '../ui/ProtectedImage';
 import './Hero.css';
 
 const Hero = () => {
@@ -225,7 +226,7 @@ const Hero = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <div className="photo-frame">
-                    <img
+                    <ProtectedImage
                       src="assets/me.png"
                       alt="Ketul Panchal"
                       className="card-photo"

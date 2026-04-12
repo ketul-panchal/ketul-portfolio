@@ -1,0 +1,28 @@
+.protected-image-wrapper {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none; /* Disables iOS long-press "Save Image" */
+}
+
+.protected-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none; /* Image itself can't be targeted */
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* Transparent shield sitting on top of the image */
+.protected-image-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: transparent;
+  cursor: default;
+  /* This layer receives all pointer events instead of the <img> */
+}

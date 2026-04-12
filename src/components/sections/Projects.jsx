@@ -1,5 +1,6 @@
 import { projects } from '../../data/projectsData';
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
+import ProtectedImage from '../ui/ProtectedImage';
 import { FiExternalLink, FiGithub, FiArrowUpRight } from 'react-icons/fi';
 import './Projects.css';
 import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue } from 'framer-motion';
@@ -142,14 +143,10 @@ const ProjectCard = ({ project, index, isLast }) => {
             {/* Right Side - Image */}
             <div className="project-card-visual">
                 {project.image ? (
-                    <img
+                    <ProtectedImage
                         src={import.meta.env.BASE_URL + project.image}
                         alt={project.name}
                         className="project-card-image"
-                        onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
-                        }}
                     />
                 ) : null}
                 <div className="project-card-image-placeholder" style={{ display: project.image ? 'none' : 'flex' }}>

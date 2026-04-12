@@ -57,3 +57,25 @@ a {
   background: rgba(255, 107, 53, 0.3);
   color: #fff;
 }
+
+/* ─── Content Protection ────────────────────────────────────────────────── */
+
+/* Prevent all images from being dragged/saved */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
+
+/* Re-enable pointer-events on interactive images (buttons, links containing images) */
+a img,
+button img {
+  pointer-events: auto;
+}
+
+/* Disable text selection on the whole page */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
