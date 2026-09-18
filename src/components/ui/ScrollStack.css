@@ -8,7 +8,14 @@
   top: 0;
   width: 100%;
   min-height: 100vh;
-  min-height: 100dvh;
+  /*
+   * `svh`, NOT `dvh`. `dvh` tracks the mobile URL bar, so it changes on every
+   * frame while the bar collapses — which re-lays-out all eight sticky cards
+   * mid-scroll. That is the stutter and the torn pixels on phones. `svh` is the
+   * *small* viewport height: fixed for the whole scroll, and the card still
+   * fills the screen with the browser chrome showing.
+   */
+  min-height: 100svh;
   /* background #000 hides the previous card behind the rounded corners of the next card */
   /* background: #000; */
   background: linear-gradient(
@@ -16,17 +23,22 @@
   transparent 0%,
   rgba(0, 0, 0, 1) 100%
   );
-  /* Fix for vibration/jank on mobile */
-  transform: translate3d(0, 0, 0);  
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
+  /*
+   * No `translate3d` / `backface-visibility` / `will-change` here on purpose.
+   * Each of those promotes this card to its own full-viewport compositor layer,
+   * and with eight of them stacked the GPU runs out of tile memory and starts
+   * evicting tiles — which is exactly what showed up as half-painted, torn
+   * pixels while scrolling. The browser already composites sticky elements; it
+   * does not need the hint. (These were originally added to fix mobile
+   * vibration — that was the `dvh` resize above, now fixed at the source.)
+   */
 }
 
 /* Last card styles removed here, handled in component to ensure proper radius */
 .scroll-stack-card:last-child {
   height: auto;
   min-height: 100vh;
+  min-height: 100svh;
 }
 
 /* Responsive */

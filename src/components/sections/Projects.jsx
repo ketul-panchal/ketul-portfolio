@@ -3,11 +3,20 @@ import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
 import ProtectedImage from '../ui/ProtectedImage';
 import { FiExternalLink, FiGithub, FiArrowUpRight } from 'react-icons/fi';
 import './Projects.css';
-import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue, useInView } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 // Simplified Moving Text Component with Seamless Loop
 const ParallaxText = ({ children, baseVelocity = 5 }) => {
+    const containerRef = useRef(null);
+    // The loop used to run for the entire life of the page — including the
+    // whole Projects scroll, where every frame counts. Only animate while the
+    // strip is actually on screen.
+    const isInView = useInView(containerRef, { margin: '200px 0px' });
+    const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+    const isActive = isInView && !prefersReducedMotion;
+
     const { scrollY } = useScroll();
     const scrollVelocity = useVelocity(scrollY);
     const smoothVelocity = useSpring(scrollVelocity, {
@@ -23,7 +32,10 @@ const ParallaxText = ({ children, baseVelocity = 5 }) => {
     const currentX = useRef(0);
 
     useAnimationFrame((t, delta) => {
-        let moveBy = baseVelocity * (delta / 1000);
+        if (!isActive) return;
+        // A backgrounded tab hands back one huge delta on return; clamping it
+        // stops the strip from teleporting.
+        let moveBy = baseVelocity * (Math.min(delta, 50) / 1000);
         const velocity = Math.abs(velocityFactor.get());
         if (velocity > 0) {
             moveBy += moveBy * velocity;
@@ -37,7 +49,7 @@ const ParallaxText = ({ children, baseVelocity = 5 }) => {
     });
 
     return (
-        <div className="parallax-text-container">
+        <div className="parallax-text-container" ref={containerRef}>
             <motion.div
                 className="parallax-text-scroller"
                 style={{ x: useTransform(x, value => `${value}%`) }}
@@ -144,9 +156,15 @@ const ProjectCard = ({ project, index, isLast }) => {
             <div className="project-card-visual">
                 {project.image ? (
                     <ProtectedImage
-                        src={import.meta.env.BASE_URL + project.image}
+                        src={`${import.meta.env.BASE_URL}${project.image}-1200.webp`}
+                        srcSet={`${import.meta.env.BASE_URL}${project.image}-720.webp 720w, ${import.meta.env.BASE_URL}${project.image}-1200.webp 1200w`}
+                        sizes="(max-width: 1024px) 92vw, 55vw"
+                        width={project.imageWidth}
+                        height={project.imageHeight}
                         alt={project.name}
                         className="project-card-image"
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        fetchPriority={index === 0 ? 'high' : 'auto'}
                     />
                 ) : null}
                 <div className="project-card-image-placeholder" style={{ display: project.image ? 'none' : 'flex' }}>
@@ -157,9 +175,47 @@ const ProjectCard = ({ project, index, isLast }) => {
     );
 };
 
+// Marks the section while the page is actually moving, so the expensive
+// screenshot shadow can be switched off for the duration. See the
+// `[data-scrolling]` rule in Projects.css for why.
+const useIsScrolling = (ref) => {
+    useEffect(() => {
+        const node = ref.current;
+        if (!node) return undefined;
+
+        let idleTimer;
+        let moving = false;
+
+        const onScroll = () => {
+            // Only touch the DOM on a transition — writing the attribute on
+            // every scroll event would invalidate style ~60x a second and give
+            // back a chunk of what this is meant to save.
+            if (!moving) {
+                moving = true;
+                node.dataset.scrolling = 'true';
+            }
+            clearTimeout(idleTimer);
+            // Long enough that Lenis' easing tail counts as "still moving".
+            idleTimer = setTimeout(() => {
+                moving = false;
+                delete node.dataset.scrolling;
+            }, 180);
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            clearTimeout(idleTimer);
+        };
+    }, [ref]);
+};
+
 const Projects = () => {
+    const sectionRef = useRef(null);
+    useIsScrolling(sectionRef);
+
     return (
-        <section id="projects" className="projects-section">
+        <section id="projects" className="projects-section" ref={sectionRef}>
             {/* Header with Marquee */}
             <div className="projects-marquee-container">
                 <ParallaxText baseVelocity={3.5}>

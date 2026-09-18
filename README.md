@@ -14,3 +14,20 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Project screenshots
+
+Full-resolution screenshots live in `assets-src/project/` — **outside** `public/`,
+so the originals are never deployed. Run:
+
+```bash
+npm run optimize:images
+```
+
+This writes `<name>-720.webp` and `<name>-1200.webp` into `public/assets/project/`.
+The Projects cards and the Gallery strip build their `srcset` from those two widths.
+
+To add a project, drop the screenshot into `assets-src/project/`, run the command
+above, then in `src/data/projectsData.js` point `image` at the **base name** (no
+width suffix, no extension) and set `imageWidth` / `imageHeight` to the original
+pixel dimensions so the browser can reserve the space before the image loads.

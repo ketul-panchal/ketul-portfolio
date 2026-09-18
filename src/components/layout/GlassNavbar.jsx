@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import GlassSurface from '../ui/GlassSurface';
+import { scrollToElement } from '../../utils/lenis';
 import './GlassNavbar.css';
 
 const NAV_ITEMS = [
@@ -20,8 +21,17 @@ const GlassNavbar = () => {
     const navRef = useRef(null);
 
     // Handle scroll
+    //
+    // Same logic as before, but deferred into a rAF and registered passively.
+    // Reading getBoundingClientRect() straight out of a scroll handler forces a
+    // synchronous layout — five of them, once per event, right in the middle of
+    // the browser's scrolling work. Batching them into one frame callback keeps
+    // the measurements but takes them off the scroll path.
     useEffect(() => {
-        const handleScroll = () => {
+        let ticking = false;
+
+        const measure = () => {
+            ticking = false;
             setScrolled(window.scrollY > 50);
 
             // Detect active section
@@ -38,7 +48,13 @@ const GlassNavbar = () => {
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        const handleScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(measure);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -63,10 +79,10 @@ const GlassNavbar = () => {
     }, []);
 
     const handleNavigate = (link) => {
-        const element = document.querySelector(link);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
+        // Routed through Lenis. Native smooth scrolling and Lenis both animate
+        // the scroll position on their own schedule, so running them together
+        // made the page fight itself and stall. Same destination either way.
+        scrollToElement(document.querySelector(link));
         setIsOpen(false);
     };
 

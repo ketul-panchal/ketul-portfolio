@@ -23,10 +23,15 @@ const GalleryCard = ({ project, index }) => (
   >
     <div className="gallery-card-inner">
       <img
-        src={BASE + project.image}
+        /* 360x240 card, so the 720w variant covers it even at 2x DPR. These
+           thumbnails used to pull the full multi-megabyte PNG each. */
+        src={`${BASE}${project.image}-720.webp`}
         alt={project.name}
         className="gallery-card-img"
+        width={project.imageWidth}
+        height={project.imageHeight}
         loading="lazy"
+        decoding="async"
         draggable={false}
       />
       {/* Hover overlay */}

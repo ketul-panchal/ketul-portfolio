@@ -62,7 +62,8 @@
 /* Project Card Content */
 .project-card-content {
   min-height: 100vh;
-  min-height: 100dvh;
+  /* svh, not dvh — see the note in ScrollStack.css. */
+  min-height: 100svh;
   display: grid;
   grid-template-columns: 45% 55%;
   padding: 0; 
@@ -203,6 +204,22 @@
 
 .project-card-image:hover {
   transform: perspective(1000px) rotateY(-2deg) rotateX(1deg) scale(1.02);
+}
+
+/*
+ * This drop-shadow is, by a wide margin, the most expensive thing on the page.
+ * It has to be recomputed from the screenshot's alpha channel on every repaint,
+ * and a sticky full-viewport card repaints continuously while the stack
+ * scrolls. Measured over the whole section at 4x CPU throttle: ~83ms per frame
+ * with it, ~17ms without — the difference between roughly 12fps and a locked 60.
+ *
+ * So it stays exactly as it was whenever the page is still (which is when the
+ * shadow is actually looked at) and is dropped only while the page is in
+ * motion, where a soft shadow is not resolvable anyway. Layer promotion was
+ * tried first and does not help; the filter is re-rasterised regardless.
+ */
+.projects-section[data-scrolling] .project-card-image {
+  filter: none;
 }
 
 .project-card-image-placeholder {

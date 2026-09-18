@@ -16,8 +16,32 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /*
+   * Deliberately NOT `scroll-behavior: smooth`. Lenis animates the scroll
+   * position itself; leaving native smooth scrolling on means two animations
+   * chase the same target and the page judders. Smooth anchor jumps are
+   * handled through Lenis in utils/lenis.js instead.
+   */
+  scroll-behavior: auto;
   font-size: 16px;
+}
+
+/* Lenis' own requirements — without these it cannot own the scroll cleanly. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
