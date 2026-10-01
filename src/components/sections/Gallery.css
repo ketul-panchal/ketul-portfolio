@@ -319,6 +319,7 @@
 }
 
 .work-card-number {
+  flex-shrink: 0;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -326,17 +327,27 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
+/* A long category wraps inside the pill instead of running under the arrow */
 .work-card-category {
+  min-width: 0;
   padding: 5px 11px;
   border: 1px solid rgba(var(--accent-rgb), 0.32);
-  border-radius: 999px;
+  border-radius: 14px;
   background: rgba(var(--accent-rgb), 0.14);
   font-size: 0.64rem;
   font-weight: 600;
+  line-height: 1.35;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  white-space: nowrap;
+  overflow-wrap: break-word;
+  text-wrap: balance;
   color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 400px) {
+  .work-card-category {
+    letter-spacing: 0.08em;
+  }
 }
 
 .work-card-body {
