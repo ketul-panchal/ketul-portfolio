@@ -1,4 +1,5 @@
 .scroll-stack-container {
+  --stack-radius: 40px;
   position: relative;
   width: 100%;
 }
@@ -6,32 +7,41 @@
 .scroll-stack-card {
   position: sticky;
   top: 0;
+  /* A card taller than the screen sticks by its bottom edge; --card-h is measured by ScrollStack */
+  top: min(0px, calc(100svh - var(--card-h, 100svh)));
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
-  /* background #000 hides the previous card behind the rounded corners of the next card */
-  /* background: #000; */
-  background: linear-gradient(
-  to bottom,
-  transparent 0%,
-  rgba(0, 0, 0, 1) 100%
-  );
-  /* Fix for vibration/jank on mobile */
-  transform: translate3d(0, 0, 0);  
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+}
+
+.scroll-stack-card-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--stack-radius) var(--stack-radius) 0 0;
+  /* Shadow cast up onto the card underneath */
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.3);
+  transform-origin: 50% 0;
+}
+
+.scroll-stack-card:last-child .scroll-stack-card-inner {
+  border-radius: var(--stack-radius);
+}
+
+/* Cards on screen get their own layer, so shrinking them while covered costs no repaints */
+.scroll-stack-card-inner.is-live {
   will-change: transform;
 }
 
-/* Last card styles removed here, handled in component to ensure proper radius */
-.scroll-stack-card:last-child {
-  height: auto;
-  min-height: 100vh;
+/* Darkens a card as the next one covers it */
+.scroll-stack-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .scroll-stack-card {
-    /* Reset radius logic if any remains */
+  .scroll-stack-container {
+    --stack-radius: 28px;
   }
 }

@@ -1,187 +1,160 @@
+import { motion, MotionConfig } from 'framer-motion';
+import { FiArrowUpRight } from 'react-icons/fi';
 import { projects } from '../../data/projectsData';
+import { getProjectImage } from '../../utils/projectImage';
+import { describeLink } from '../../utils/projectLink';
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
 import ProtectedImage from '../ui/ProtectedImage';
-import { FiExternalLink, FiGithub, FiArrowUpRight } from 'react-icons/fi';
 import './Projects.css';
-import { motion, useScroll, useTransform, useSpring, useVelocity, useAnimationFrame, useMotionValue } from 'framer-motion';
-import { useRef } from 'react';
 
-// Simplified Moving Text Component with Seamless Loop
-const ParallaxText = ({ children, baseVelocity = 5 }) => {
-    const { scrollY } = useScroll();
-    const scrollVelocity = useVelocity(scrollY);
-    const smoothVelocity = useSpring(scrollVelocity, {
-        damping: 50,
-        stiffness: 400
-    });
+const ease = [0.22, 1, 0.36, 1];
 
-    const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
-        clamp: false
-    });
+const pad = (n) => String(n).padStart(2, '0');
+const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
-    const x = useMotionValue(0);
-    const currentX = useRef(0);
+// Largest width the image is shown at, for picking one from the srcset
+const IMAGE_SIZES = '(min-width: 1024px) 56vw, (min-width: 640px) and (orientation: landscape) 50vw, 92vw';
 
-    useAnimationFrame((t, delta) => {
-        let moveBy = baseVelocity * (delta / 1000);
-        const velocity = Math.abs(velocityFactor.get());
-        if (velocity > 0) {
-            moveBy += moveBy * velocity;
-        }
+const reveal = {
+    hidden: { opacity: 0, y: 28 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
+};
 
-        currentX.current -= moveBy;
-        if (currentX.current <= -25) {
-            currentX.current = 0;
-        }
-        x.set(currentX.current);
-    });
+const wordRise = {
+    hidden: { y: '110%' },
+    visible: { y: '0%', transition: { duration: 0.9, ease } },
+};
+
+const stagger = (gap) => ({ visible: { transition: { staggerChildren: gap } } });
+
+const ProjectCard = ({ project, index }) => {
+    const image = getProjectImage(project.image);
+    const link = describeLink(project.url);
+    const LinkIcon = link?.Icon;
+    const title = project.shortName || project.name;
+    const titleId = `project-${project.id}-title`;
 
     return (
-        <div className="parallax-text-container">
+        <article
+            className="project-card"
+            aria-labelledby={titleId}
+            style={{
+                '--card-bg': project.cardBackground,
+                '--card-fg': project.textColor,
+                '--accent': project.accentColor,
+                '--glow-rgb': image.rgb,
+            }}
+        >
             <motion.div
-                className="parallax-text-scroller"
-                style={{ x: useTransform(x, value => `${value}%`) }}
+                className="project-card-info"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
+                variants={stagger(0.07)}
             >
-                <span>{children}</span>
-                <span>{children}</span>
-                <span>{children}</span>
-                <span>{children}</span>
-            </motion.div>
-        </div>
-    );
-}
+                <motion.p className="project-card-meta" variants={reveal}>
+                    <span className="project-card-index">
+                        {pad(index + 1)} <span>/ {pad(projects.length)}</span>
+                    </span>
+                    {project.category && <span className="project-card-category">{project.category}</span>}
+                </motion.p>
 
-const ProjectCard = ({ project, index, isLast }) => {
-    // Alternate between dark and light cards
-    const isLight = index % 2 === 1;
+                <motion.h3 id={titleId} className="project-card-title" variants={reveal}>
+                    {title}
+                </motion.h3>
 
-    const cardStyle = {
-        background: isLight
-            ? '#f8f8f8'
-            : (project.cardBackground || 'linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%)'),
-        color: isLight ? '#000' : (project.textColor || '#ffffff'),
-        // Border Radius applied here now
-        borderRadius: isLast ? '40px' : '40px 40px 0 0',
-        // Shadow applied here to mask the card below
-        boxShadow: '0 -20px 60px rgba(0, 0, 0, 0.3)',
-        overflow: 'hidden'
-    };
+                <motion.p className="project-card-description" variants={reveal}>
+                    {capitalize(project.description)}
+                </motion.p>
 
-    const accentColor = project.accentColor || '#ff6b35';
-
-    return (
-        <div className={`project-card-content ${isLight ? 'light' : 'dark'}`} style={cardStyle}>
-            {/* Link Arrow Button - Top Right */}
-            {project.url && project.url !== '#' && (
-                <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-arrow-link"
-                    style={{
-                        background: isLight ? '#8B5CF6' : accentColor, // Purple or Accent
-                        color: '#fff'
-                    }}
-                >
-                    <FiArrowUpRight />
-                </a>
-            )}
-
-            {/* Left Side - Info */}
-            <div className="project-card-info">
-                <h3 className="project-card-title">{project.name}</h3>
-
-                <div className="project-card-tech">
-                    {project.techStack.split(',').map((tech, idx) => (
-                        <span
-                            key={idx}
-                            className="tech-tag"
-                            style={{
-                                borderColor: isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)',
-                                color: isLight ? '#333' : 'rgba(255,255,255,0.8)',
-                                background: isLight ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.05)'
-                            }}
-                        >
-                            {tech.trim()}
-                        </span>
+                <motion.ul className="project-card-tech" aria-label="Tech stack" variants={reveal}>
+                    {project.techStack.split(',').map((tech) => (
+                        <li key={tech}>{tech.trim()}</li>
                     ))}
-                </div>
+                </motion.ul>
 
-                <p className="project-card-description">{project.description}</p>
+                {link && (
+                    <motion.a
+                        className="project-card-cta"
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${link.label}: ${title} (opens in a new tab)`}
+                        variants={reveal}
+                    >
+                        <LinkIcon className="project-card-cta-icon" aria-hidden="true" />
+                        {link.label}
+                        <span className="project-card-cta-arrow" aria-hidden="true">
+                            <FiArrowUpRight />
+                        </span>
+                    </motion.a>
+                )}
+            </motion.div>
 
-                {/* <div className="project-card-actions">
-                    {project.url && project.url !== '#' && (
-                        <a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="project-link primary"
-                            style={{ background: isLight ? '#000' : accentColor, color: '#fff' }}
-                        >
-                            <FiExternalLink />
-                            <span>View Project</span>
-                        </a>
-                    )}
-                    {project.github && (
-                        <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="project-link secondary"
-                            style={{
-                                borderColor: isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.2)',
-                                color: isLight ? '#000' : '#fff'
-                            }}
-                        >
-                            <FiGithub />
-                            <span>Code</span>
-                        </a>
-                    )}
-                </div> */}
-            </div>
-
-            {/* Right Side - Image */}
-            <div className="project-card-visual">
-                {project.image ? (
-                    <ProtectedImage
-                        src={import.meta.env.BASE_URL + project.image}
-                        alt={project.name}
-                        className="project-card-image"
-                        loading="lazy"
-                        decoding="async"
-                    />
-                ) : null}
-                <div className="project-card-image-placeholder" style={{ display: project.image ? 'none' : 'flex' }}>
-                    <span className="project-icon">🚀</span>
-                </div>
-            </div>
-        </div>
+            <motion.div
+                className="project-card-visual"
+                initial={{ opacity: 0, y: 48, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.9, ease }}
+            >
+                <ProtectedImage
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    sizes={IMAGE_SIZES}
+                    width={image.width}
+                    height={image.height}
+                    alt={`${project.name} screenshots`}
+                    className="project-card-image"
+                    loading="lazy"
+                    decoding="async"
+                />
+            </motion.div>
+        </article>
     );
 };
 
 const Projects = () => {
     return (
-        <section id="projects" className="projects-section">
-            {/* Header with Marquee */}
-            <div className="projects-marquee-container">
-                <ParallaxText baseVelocity={3.5}>
-                    &nbsp; Full Stack Application &nbsp; <span className="star-icon">✦</span> &nbsp; Mobile App &nbsp; <span className="star-icon">✦</span> &nbsp; SaaS &nbsp; <span className="star-icon">✦</span> &nbsp; Web App &nbsp; <span className="star-icon">✦</span> &nbsp; Website &nbsp; <span className="star-icon">✦</span>
-                </ParallaxText>
-            </div>
+        <MotionConfig reducedMotion="user">
+            <section id="projects" className="projects-section" aria-labelledby="projects-title">
+                <motion.header
+                    className="projects-header"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.4 }}
+                    variants={stagger(0.08)}
+                >
+                    <div>
+                        <motion.span className="projects-label" variants={reveal}>
+                            Projects
+                        </motion.span>
+                        <h2 id="projects-title" className="projects-title">
+                            <span className="projects-title-mask">
+                                <motion.span variants={wordRise}>Every build,</motion.span>
+                            </span>{' '}
+                            <span className="projects-title-mask">
+                                <motion.span className="accent" variants={wordRise}>
+                                    in detail.
+                                </motion.span>
+                            </span>
+                        </h2>
+                    </div>
+                    <motion.p className="projects-subtitle" variants={reveal}>
+                        Mobile apps, web platforms and SaaS products. What each one does, and the
+                        stack behind it.
+                    </motion.p>
+                </motion.header>
 
-            {/* Sticky Stack Cards */}
-            <ScrollStack>
-                {projects.map((project, index) => (
-                    <ScrollStackItem key={project.id}>
-                        <ProjectCard
-                            project={project}
-                            index={index}
-                            isLast={index === projects.length - 1}
-                        />
-                    </ScrollStackItem>
-                ))}
-            </ScrollStack>
-        </section>
+                <ScrollStack>
+                    {projects.map((project, index) => (
+                        <ScrollStackItem key={project.id}>
+                            <ProjectCard project={project} index={index} />
+                        </ScrollStackItem>
+                    ))}
+                </ScrollStack>
+            </section>
+        </MotionConfig>
     );
 };
 

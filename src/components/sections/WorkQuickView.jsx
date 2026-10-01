@@ -8,11 +8,10 @@ import {
   useReducedMotion,
   useTransform,
 } from 'framer-motion';
-import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiGithub, FiX } from 'react-icons/fi';
-import { FaApple, FaGooglePlay } from 'react-icons/fa';
-import { SiUpwork } from 'react-icons/si';
+import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { projects as allProjects } from '../../data/projectsData';
 import { getProjectImage } from '../../utils/projectImage';
+import { describeLink } from '../../utils/projectLink';
 import './WorkQuickView.css';
 
 const ease = [0.22, 1, 0.36, 1];
@@ -20,23 +19,6 @@ const flipSpring = { type: 'spring', stiffness: 220, damping: 28 };
 
 const pad = (n) => String(n).padStart(2, '0');
 const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
-
-// Where a project link goes, so the button can say so
-const LINK_TYPES = [
-  { host: 'apps.apple.com', label: 'View on the App Store', Icon: FaApple },
-  { host: 'play.google.com', label: 'Get it on Google Play', Icon: FaGooglePlay },
-  { host: 'github.com', label: 'View the code on GitHub', Icon: FiGithub },
-  { host: 'upwork.com', label: 'View on Upwork', Icon: SiUpwork },
-];
-
-const describeLink = (url) => {
-  try {
-    const { hostname } = new URL(url);
-    return LINK_TYPES.find((type) => hostname.endsWith(type.host)) ?? { label: 'Visit the live site', Icon: FiArrowUpRight };
-  } catch {
-    return null; // no link, or a placeholder like "#"
-  }
-};
 
 const slide = {
   enter: (direction) => ({ opacity: 0, x: direction * 90 }),
