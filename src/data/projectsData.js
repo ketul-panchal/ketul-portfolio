@@ -1,5 +1,9 @@
 // Projects Data Configuration
 // Add, remove, or modify projects here
+//
+// shortName (optional) — shorter title for the Featured Work cards
+// category             — label shown on the cards, e.g. "E-Commerce App"
+// platform             — "mobile" or "web", used by the Featured Work filters
 
 export const projectsHeader = {
   title: "Projects",
@@ -11,6 +15,8 @@ export const projects = [
     {
     id: "crown-pos",
     name: "Crown POS",
+    category: "Point of Sale App",
+    platform: "mobile",
     techStack: "Flutter, Laravel, REST APIs",
     description:
       "A high-performance Flutter POS app integrated with a Laravel ERP system.",
@@ -24,6 +30,9 @@ export const projects = [
   {
     id: "quick-qr",
     name: "Digital QR Code Restaurant Menu Maker & Contactless Ordering System",
+    shortName: "QuickQR",
+    category: "Restaurant SaaS",
+    platform: "web",
     techStack: "ReactJs, NodeJs, ExpressJs, MongoDB",
     description:
       "web application that allows restaurant owners to create QR code menus for their customers. Customers can scan the QR code and view the menu on their mobile devices. They can also place orders.",
@@ -37,6 +46,9 @@ export const projects = [
   {
     id: "lux-erp",
     name: "LUXE - ERP And E-Commerce Website",
+    shortName: "LUXE",
+    category: "ERP & E-Commerce",
+    platform: "web",
     techStack: "Turborepo, NextJs, NodeJs, Postgres",
     description:
       "A unified Turborepo ERP and eCommerce platform with real-time inventory and a modern storefront.",
@@ -50,6 +62,9 @@ export const projects = [
   {
     id: "elite-protector",
     name: "Elite - Protector And Security",
+    shortName: "Elite",
+    category: "Mobility & Security App",
+    platform: "mobile",
     techStack: "Flutter, MERN, REST APIs",
     description:
       "A premium Flutter app for on-demand mobility and protection with secure membership integration.",
@@ -63,6 +78,8 @@ export const projects = [
     {
     id: "wanderlust",
     name: "Wanderlust",
+    category: "Travel Booking Platform",
+    platform: "web",
     techStack: "ReactJs, NodeJs, ExpressJs, MongoDB",
     description:
       "Wunderlust is a travel and hotel booking platform that allows users to explore, list, and manage stays through a modern full-stack web application.",
@@ -76,6 +93,9 @@ export const projects = [
    {
     id: "Empire-WooCommerce",
     name: "Empire WooCommerce App",
+    shortName: "Empire",
+    category: "E-Commerce App",
+    platform: "mobile",
     techStack: "Flutter, WooREST API",
     description:
       "A high-performance Flutter WooCommerce apps integrated with a WordPress website",
@@ -89,6 +109,9 @@ export const projects = [
      {
     id: "Gotham-WooCommerce",
     name: "Gotham WooCommerce App",
+    shortName: "Gotham",
+    category: "E-Commerce App",
+    platform: "mobile",
     techStack: "Flutter, WooREST API",
     description:
       "A high-performance Flutter WooCommerce apps integrated with a WordPress website",
@@ -102,6 +125,9 @@ export const projects = [
   {
     id: "food-app",
     name: "Yum Point App",
+    shortName: "Yum Point",
+    category: "Food Ordering App",
+    platform: "mobile",
     techStack: "Flutter, Laravel, REST APIs",
     description:
       "Food App that's help people easly order food and fast delivery",

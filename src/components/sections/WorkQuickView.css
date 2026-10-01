@@ -1,0 +1,334 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Featured Work — quick view dialog
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wqv {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vh, 48px) clamp(16px, 4vw, 64px);
+  color: #fff;
+  overscroll-behavior: contain;
+}
+
+.wqv.is-closing {
+  pointer-events: none;
+}
+
+.wqv-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 3, 5, 0.78);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+}
+
+.wqv-dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  width: min(1200px, 100%);
+  height: min(780px, 100%);
+}
+
+/* Panel background, faded/scaled separately so the flying image isn't affected */
+.wqv-panel {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  background:
+    radial-gradient(90% 70% at 28% 45%, rgba(var(--accent-rgb), 0.12), transparent 60%),
+    linear-gradient(160deg, #13131a 0%, #0a0a0e 100%);
+  box-shadow: 0 50px 140px -20px rgba(0, 0, 0, 0.75);
+}
+
+/* ─── Image stage ───────────────────────────────────────────────────────── */
+
+.wqv-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 80px 32px 56px 56px;
+  container-type: size;
+}
+
+.wqv-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: rgba(var(--accent-rgb), 0.3);
+  filter: blur(80px);
+  translate: -50% -50%;
+  transition: background-color 0.6s ease;
+  pointer-events: none;
+}
+
+.wqv-figure {
+  position: relative;
+  width: min(100cqw, 100cqh * var(--ar, 1.6));
+  aspect-ratio: var(--ar, 1.6);
+}
+
+.wqv-flip {
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+}
+
+.wqv-flip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55));
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ─── Details ───────────────────────────────────────────────────────────── */
+
+.wqv-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  padding: 96px 56px 40px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.wqv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.wqv-number {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.wqv-category {
+  padding: 6px 12px;
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.14);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.wqv-title {
+  margin: 0 0 18px;
+  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.wqv-description {
+  margin: 0 0 30px;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.wqv-label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.wqv-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 34px;
+  padding: 0;
+  list-style: none;
+}
+
+.wqv-tech li {
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.wqv-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 22px 0 20px;
+  border-radius: 999px;
+  background: var(--gradient);
+  box-shadow: 0 14px 34px -10px rgba(255, 107, 53, 0.6);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.wqv-cta-icon {
+  font-size: 1.1rem;
+}
+
+.wqv-cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.wqv-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 44px -10px rgba(255, 107, 53, 0.75);
+}
+
+.wqv-cta:hover .wqv-cta-arrow {
+  transform: translate(2px, -2px);
+}
+
+.wqv-hint {
+  margin: 36px 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.wqv-hint kbd {
+  display: inline-block;
+  min-width: 22px;
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+/* ─── Toolbar ───────────────────────────────────────────────────────────── */
+
+.wqv-toolbar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wqv-counter {
+  margin-right: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.wqv-counter span {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.wqv-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 1.15rem;
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.3s ease;
+}
+
+.wqv-btn:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.wqv-close:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  transform: rotate(90deg);
+}
+
+.wqv-btn:focus-visible,
+.wqv-cta:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+/* ─── Small screens: full-screen sheet, image on top ────────────────────── */
+
+@media (max-width: 860px) {
+  .wqv {
+    padding: 0;
+  }
+
+  .wqv-dialog {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 42%) minmax(0, 1fr);
+    width: 100%;
+    height: 100%;
+  }
+
+  .wqv-panel {
+    border: 0;
+    border-radius: 0;
+  }
+
+  .wqv-stage {
+    padding: 76px 24px 12px;
+  }
+
+  .wqv-info {
+    justify-content: flex-start;
+    padding: 16px 24px 32px;
+  }
+
+  .wqv-toolbar {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+@media (hover: none) {
+  .wqv-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wqv-close:hover {
+    transform: none;
+  }
+}

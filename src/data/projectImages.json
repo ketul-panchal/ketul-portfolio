@@ -1,0 +1,74 @@
+{
+  "assets/project/project_two.png": {
+    "width": 1616,
+    "height": 962,
+    "srcSet": {
+      "800": "assets/project/optimized/project_two-800.webp",
+      "1600": "assets/project/optimized/project_two-1600.webp"
+    },
+    "color": "#4064e0"
+  },
+  "assets/project/Gemini_Generated_Image_6habqa6habqa6hab-Photoroom.png": {
+    "width": 1023,
+    "height": 610,
+    "srcSet": {
+      "800": "assets/project/optimized/Gemini_Generated_Image_6habqa6habqa6hab-Photoroom-800.webp",
+      "1023": "assets/project/optimized/Gemini_Generated_Image_6habqa6habqa6hab-Photoroom-1023.webp"
+    },
+    "color": "#30a0c5"
+  },
+  "assets/project/project_new.png": {
+    "width": 1388,
+    "height": 808,
+    "srcSet": {
+      "800": "assets/project/optimized/project_new-800.webp",
+      "1388": "assets/project/optimized/project_new-1388.webp"
+    },
+    "color": "#fe9309"
+  },
+  "assets/project/project_tree.png": {
+    "width": 1288,
+    "height": 898,
+    "srcSet": {
+      "800": "assets/project/optimized/project_tree-800.webp",
+      "1288": "assets/project/optimized/project_tree-1288.webp"
+    },
+    "color": null
+  },
+  "assets/project/project_four.png": {
+    "width": 1386,
+    "height": 777,
+    "srcSet": {
+      "800": "assets/project/optimized/project_four-800.webp",
+      "1386": "assets/project/optimized/project_four-1386.webp"
+    },
+    "color": "#4fa1ce"
+  },
+  "assets/project/project_five.png": {
+    "width": 3318,
+    "height": 2111,
+    "srcSet": {
+      "800": "assets/project/optimized/project_five-800.webp",
+      "1600": "assets/project/optimized/project_five-1600.webp"
+    },
+    "color": "#dc3131"
+  },
+  "assets/project/project_six.png": {
+    "width": 1825,
+    "height": 1293,
+    "srcSet": {
+      "800": "assets/project/optimized/project_six-800.webp",
+      "1600": "assets/project/optimized/project_six-1600.webp"
+    },
+    "color": null
+  },
+  "assets/project/project_seven.png": {
+    "width": 1336,
+    "height": 936,
+    "srcSet": {
+      "800": "assets/project/optimized/project_seven-800.webp",
+      "1336": "assets/project/optimized/project_seven-1336.webp"
+    },
+    "color": "#e7b439"
+  }
+}

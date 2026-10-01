@@ -71,7 +71,7 @@ const CustomCursor = () => {
         setCursorVariant('hover');
 
         const text = target.dataset.cursorText || target.closest('[data-cursor-text]')?.dataset.cursorText;
-        if (text) setHoverText(text);
+        setHoverText(text || '');
       }
 
       // Cards

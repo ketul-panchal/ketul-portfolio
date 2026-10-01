@@ -147,6 +147,8 @@ const ProjectCard = ({ project, index, isLast }) => {
                         src={import.meta.env.BASE_URL + project.image}
                         alt={project.name}
                         className="project-card-image"
+                        loading="lazy"
+                        decoding="async"
                     />
                 ) : null}
                 <div className="project-card-image-placeholder" style={{ display: project.image ? 'none' : 'flex' }}>
