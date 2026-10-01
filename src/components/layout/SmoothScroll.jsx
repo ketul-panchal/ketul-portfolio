@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 
-const SmoothScroll = ({ children }) => {
+const SmoothScroll = ({ children, paused = false }) => {
+    const lenisRef = useRef(null);
+
     useEffect(() => {
         const lenis = new Lenis({
             duration: 2.8, // Adjusted for slower scroll
@@ -13,6 +15,7 @@ const SmoothScroll = ({ children }) => {
             smoothTouch: false,
             touchMultiplier: 2,
         });
+        lenisRef.current = lenis;
 
         function raf(time) {
             lenis.raf(time);
@@ -25,6 +28,20 @@ const SmoothScroll = ({ children }) => {
             lenis.destroy();
         };
     }, []);
+
+    // Lock scrolling (smooth and native) while the intro plays over the page
+    useEffect(() => {
+        if (!paused) return;
+
+        const lenis = lenisRef.current;
+        lenis?.stop();
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            lenis?.start();
+            document.body.style.overflow = '';
+        };
+    }, [paused]);
 
     return <div className="smooth-scroll-wrapper">{children}</div>;
 };

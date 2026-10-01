@@ -1,97 +1,123 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import {
+    motion,
+    AnimatePresence,
+    animate,
+    useMotionValue,
+    useMotionTemplate,
+    useTransform,
+} from 'framer-motion';
 import './SplashScreen.css';
 
-const SplashScreen = ({ onComplete }) => {
+const COUNT_DURATION = 2000; // ms for the counter to reach 100
+const COUNT_TICK = 20;
+const HOLD = 450; // ms to let the ball settle at 100% before the reveal
+const REVEAL_DURATION = 1.2; // s for the hole to open across the whole screen
+const BALL_RADIUS = 10;
+
+/**
+ * Counts to 100, then the ball blasts open into a hole that grows until the
+ * page rendered underneath is fully revealed.
+ *
+ * - `ready`      the page underneath is mounted; the counter holds at 99 until then
+ * - `onReveal`   fired as the hole starts opening (start page intro animations here)
+ * - `onComplete` fired once the page is fully uncovered (unmount the splash here)
+ */
+const SplashScreen = ({ ready = true, onReveal, onComplete }) => {
+    const splashRef = useRef(null);
     const [count, setCount] = useState(0);
-    const [isFinished, setIsFinished] = useState(false);
+    const loaded = count === 100 && ready;
+
+    // 0 → 1 over the reveal; the hole radius scales with it up to `maxRadius`
+    const progress = useMotionValue(0);
+    const maxRadius = useMotionValue(0);
+    const radius = useTransform([progress, maxRadius], ([p, max]) => p * max);
+    const edge = useTransform(radius, (r) => r + 1);
+    const mask = useMotionTemplate`radial-gradient(circle at 50% 50%, transparent ${radius}px, #000 ${edge}px)`;
+
+    const ringSize = useTransform(radius, (r) => r * 2);
+    const ringOpacity = useTransform(progress, [0, 0.1, 0.75, 1], [0, 1, 0.8, 0]);
+    // The ball swells with the hole and burns out, so it reads as the ball bursting open
+    const ballScale = useTransform(radius, (r) => Math.max(1, r / BALL_RADIUS));
+    const ballOpacity = useTransform(progress, [0, 0.15], [1, 0]);
 
     useEffect(() => {
-        const duration = 2000; // total loading time in ms
-        const intervalTime = 20;
-        const steps = duration / intervalTime;
-        const increment = 100 / steps;
+        const step = 100 / (COUNT_DURATION / COUNT_TICK);
 
         const timer = setInterval(() => {
             setCount((prev) => {
-                const next = prev + increment;
-                if (next >= 100) {
-                    clearInterval(timer);
-                    return 100;
-                }
+                const next = Math.min(prev + step, 100);
+                if (next === 100) clearInterval(timer);
                 return next;
             });
-        }, intervalTime);
+        }, COUNT_TICK);
 
         return () => clearInterval(timer);
     }, []);
 
     useEffect(() => {
-        if (count === 100) {
-            const timeout = setTimeout(() => {
-                setIsFinished(true);
-                // Delay calling onComplete to allow blast animation to finish
-                setTimeout(onComplete, 800);
-            }, 500);
-            return () => clearTimeout(timeout);
-        }
-    }, [count, onComplete]);
+        if (!loaded) return;
+
+        let controls;
+        const timeout = setTimeout(() => {
+            const { width, height } = splashRef.current.getBoundingClientRect();
+            // Far enough to clear the corners of the screen
+            maxRadius.set(Math.hypot(width, height) / 2 + 2);
+
+            onReveal?.();
+            controls = animate(progress, 1, {
+                duration: REVEAL_DURATION,
+                ease: [0.76, 0, 0.24, 1],
+                onComplete,
+            });
+        }, HOLD);
+
+        return () => {
+            clearTimeout(timeout);
+            controls?.stop();
+        };
+    }, [loaded, onReveal, onComplete, progress, maxRadius]);
 
     return (
-        <motion.div
-            className="splash-screen"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-        >
-            <div className="splash-content">
-                <AnimatePresence>
-                    {!isFinished && (
-                        <motion.div
-                            className="ball-container"
-                            exit={{ scale: 50, opacity: 0 }} // Blast effect handled here or in separate element
-                            transition={{ duration: 0.8, ease: "easeInOut" }}
-                        >
-                            {/* Converting this to the blast element. 
-                   Actually, better to have a dedicated blast element 
-                   that scales up when finished.
-               */}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+        <div className="splash-screen" ref={splashRef}>
+            {/* Dark cover over the page — the reveal hole is masked out of it */}
+            <motion.div
+                className="splash-backdrop"
+                style={{ maskImage: mask, WebkitMaskImage: mask }}
+            />
 
-                {/* The Ball */}
-                <motion.div
-                    className="splash-ball"
-                    animate={
-                        isFinished
-                            ? { scale: [1, 50], opacity: [1, 0] }
-                            : { y: [0, -40, 0] }
-                    }
-                    transition={
-                        isFinished
-                            ? { duration: 0.8, ease: "easeInOut" }
-                            : { duration: 1, repeat: Infinity, ease: "circOut" }
-                    }
-                />
+            {/* Glowing rim riding the edge of the hole */}
+            <motion.div
+                className="splash-ring"
+                style={{ width: ringSize, height: ringSize, opacity: ringOpacity }}
+            />
 
-                {/* Counter Text */}
-                <AnimatePresence>
-                    {!isFinished && (
-                        <motion.div
-                            className="splash-text"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0, y: 20 }}
-                        >
-                            <span className="count">{Math.round(count)}%</span>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
+            <motion.div
+                className="splash-ball"
+                style={{ scale: ballScale, opacity: ballOpacity }}
+                animate={loaded ? { y: 0 } : { y: [0, -40, 0] }}
+                transition={
+                    loaded
+                        ? { duration: 0.35, ease: 'easeOut' }
+                        : { duration: 1, repeat: Infinity, ease: 'circOut' }
+                }
+            />
 
-            {/* Background that might be revealed or overlay */}
-        </motion.div>
+            <AnimatePresence>
+                {!loaded && (
+                    <motion.div
+                        className="splash-text"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, y: 20 }}
+                    >
+                        <span className="count">
+                            {Math.min(Math.round(count), ready ? 100 : 99)}%
+                        </span>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 };
 

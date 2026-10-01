@@ -6,11 +6,12 @@ import Skills from '../components/sections/Skills';
 import Projects from '../components/sections/Projects';
 import Contact from '../components/sections/Contact';
 
-const Home = () => {
+// `playIntro` flips to true when the splash screen starts revealing the page
+const Home = ({ playIntro = true }) => {
   return (
     <div className="home">
-      <GlassNavbar />
-      <Hero />
+      <GlassNavbar playIntro={playIntro} />
+      <Hero playIntro={playIntro} />
       <About />
       <Gallery />
       <Skills />

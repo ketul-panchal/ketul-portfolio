@@ -12,7 +12,9 @@ const NAV_ITEMS = [
     { label: 'Contact', link: '#contact' }
 ];
 
-const GlassNavbar = () => {
+const GlassNavbar = ({ playIntro = true }) => {
+    // Entrance animations wait for the splash screen to start revealing the page
+    const intro = playIntro ? 'visible' : 'hidden';
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
@@ -92,8 +94,12 @@ const GlassNavbar = () => {
             <motion.div
                 ref={navRef}
                 className={`glass-navbar-container ${scrolled ? 'scrolled' : ''}`}
-                initial={{ y: -100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                variants={{
+                    hidden: { y: -100, opacity: 0 },
+                    visible: { y: 0, opacity: 1 },
+                }}
+                initial="hidden"
+                animate={intro}
                 transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
                 {/* Glass Surface Navbar */}
@@ -132,8 +138,12 @@ const GlassNavbar = () => {
                                             e.preventDefault();
                                             handleNavigate(item.link);
                                         }}
-                                        initial={{ opacity: 0, y: -10 }}
-                                        animate={{ opacity: 1, y: 0 }}
+                                        variants={{
+                                            hidden: { opacity: 0, y: -10 },
+                                            visible: { opacity: 1, y: 0 },
+                                        }}
+                                        initial="hidden"
+                                        animate={intro}
                                         transition={{ delay: 0.1 + index * 0.05 }}
                                         whileHover={{ scale: 1.08 }}
                                         whileTap={{ scale: 0.95 }}

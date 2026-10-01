@@ -1,0 +1,283 @@
+/* ==================== HERO ID CARD (lanyard badge) ==================== */
+.id-card-container {
+  /* Card width; fits the viewport height first, then the width. Everything on
+     the badge is sized in em from it, so it keeps its proportions everywhere. */
+  --card-w: clamp(150px, min((100vh - 330px) / 1.4, 64vw), 300px);
+  --strap-length: calc(var(--card-w) * 0.5);
+  --strap-tuck: 6px; /* how far the strap runs up under the clip */
+  position: relative;
+  z-index: 10;
+}
+
+/* The fixed point the badge swings around: the top of the lanyard */
+.badge-pivot {
+  position: absolute;
+  top: calc(var(--strap-tuck) - var(--strap-length));
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.badge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(var(--card-w) / 30); /* 1em = 10px on a 300px card */
+  transform-origin: 50% calc(var(--strap-tuck) - var(--strap-length));
+}
+
+/* ==================== LANYARD ==================== */
+.lanyard-strap {
+  position: absolute;
+  bottom: calc(100% - var(--strap-tuck));
+  left: 50%;
+  width: 3em;
+  height: var(--strap-length);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1.2em;
+  transform: translateX(-50%);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, #141414, #2a2a2a 50%, #141414);
+  box-shadow:
+    inset 1px 0 2px rgba(0, 0, 0, 0.5),
+    inset -1px 0 2px rgba(0, 0, 0, 0.5);
+  /* Fades out upwards, so the badge reads as hanging from above */
+  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent);
+  mask-image: linear-gradient(to top, #000 35%, transparent);
+}
+
+.lanyard-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: max(7px, 0.8em);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  color: rgba(255, 107, 74, 0.8);
+}
+
+.lanyard-clip {
+  position: relative;
+  z-index: 3;
+  width: 3.4em;
+  height: 1.6em;
+  margin-bottom: 0.2em;
+  border-radius: 0.5em;
+  background: linear-gradient(180deg, #5e5e5e 0%, #2e2e2e 60%, #1c1c1c 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0.3em 0.8em rgba(0, 0, 0, 0.5);
+}
+
+/* The hook that goes through the slot in the card */
+.lanyard-clip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1.6em;
+  height: 1.8em;
+  transform: translateX(-50%);
+  border-radius: 0 0 0.4em 0.4em;
+  background: linear-gradient(90deg, #3a3a3a, #9a9a9a 50%, #3a3a3a);
+  box-shadow: 0 0.2em 0.4em rgba(0, 0, 0, 0.4);
+}
+
+/* ==================== CARD ==================== */
+.id-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 30em;
+  height: 42em;
+  border-radius: 2em;
+  overflow: hidden;
+  background: linear-gradient(165deg, #14141f 0%, #1a1a2e 50%, #0f0f1a 100%);
+  box-shadow:
+    0 3em 6em -1.5em rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 5em -1.2em rgba(255, 107, 74, 0.25);
+  transition: box-shadow 0.4s ease;
+  touch-action: pan-y; /* sideways drags swing the badge, vertical ones still scroll */
+  -webkit-tap-highlight-color: transparent;
+  container-type: inline-size;
+}
+
+.id-card:hover {
+  box-shadow:
+    0 4em 7em -1.5em rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 7em -1em rgba(255, 107, 74, 0.45);
+}
+
+/* Punched slot the lanyard clip hooks into */
+.card-slot {
+  position: absolute;
+  top: 1.2em;
+  left: 50%;
+  z-index: 2;
+  width: 4.6em;
+  height: 0.8em;
+  transform: translateX(-50%);
+  border-radius: 0.4em;
+  background: #0a0a0a;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Moving highlight while hovered */
+.card-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* ==================== PHOTO ==================== */
+.photo-section {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff6b4a 0%, #ff8c5a 100%);
+}
+
+.photo-section .card-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: grayscale(100%) contrast(1.1);
+  mix-blend-mode: multiply;
+  transform-origin: 50% 20%;
+  transition:
+    filter 0.5s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Keep the head in frame when the photo is cropped */
+.photo-section .card-photo .protected-image {
+  object-position: center top;
+}
+
+.id-card:hover .card-photo {
+  filter: grayscale(60%) contrast(1.15);
+  transform: scale(1.04);
+}
+
+/* Fade the photo into the info panel */
+.photo-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10em;
+  background: linear-gradient(to top, #14141f, transparent);
+  pointer-events: none;
+}
+
+/* ==================== INFO ==================== */
+.card-info {
+  position: relative;
+  z-index: 1;
+  padding: 1.8em 2.4em 2em;
+  background: linear-gradient(180deg, #14141f 0%, #0f0f1a 100%);
+}
+
+.role-label {
+  display: block;
+  margin-bottom: 0.7em;
+  font-size: max(7px, 1.1em);
+  font-weight: 500;
+  letter-spacing: 0.27em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.role-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  margin: 0;
+  font-size: 1em;
+}
+
+.role-title span {
+  font-size: 2.8em;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.card-status {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin-top: 1.4em;
+  padding-top: 1.2em;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: max(7px, 0.9em);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.status-dot {
+  flex-shrink: 0;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: status-pulse 2s ease-out infinite;
+}
+
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.6em rgba(74, 222, 128, 0);
+  }
+}
+
+/* ==================== RESPONSIVE ==================== */
+/* Small card (short landscape phones): keep the text on one line */
+@container (max-width: 210px) {
+  .role-label {
+    letter-spacing: 0.15em;
+  }
+
+  .status-detail {
+    display: none;
+  }
+}
+
+@media (min-width: 1600px) {
+  .id-card-container {
+    --card-w: clamp(150px, min((100vh - 330px) / 1.4, 64vw), 340px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot {
+    animation: none;
+  }
+
+  .card-glare {
+    display: none;
+  }
+}

@@ -127,225 +127,6 @@
   transform: translateY(-50%);
 }
 
-/* ==================== ID CARD CONTAINER ==================== */
-.id-card-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;
-}
-
-/* ==================== LANYARD ==================== */
-.lanyard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  z-index: 11;
-}
-
-.lanyard-strap {
-  width: 36px;
-  height: 60px;
-  background: linear-gradient(
-    90deg,
-    #1a1a1a 0%,
-    #2a2a2a 20%,
-    #1a1a1a 40%,
-    #2a2a2a 60%,
-    #1a1a1a 80%,
-    #2a2a2a 100%
-  );
-  border-radius: 4px 4px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-shadow:
-    inset 2px 0 4px rgba(0, 0, 0, 0.5),
-    inset -2px 0 4px rgba(0, 0, 0, 0.5);
-}
-
-.lanyard-text {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.6);
-  transform: rotate(180deg);
-}
-
-.lanyard-connector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.connector-clip {
-  width: 30px;
-  height: 18px;
-  background: linear-gradient(180deg, #333 0%, #1a1a1a 100%);
-  border-radius: 0 0 6px 6px;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.connector-clip::before {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 3px;
-  background: #555;
-  border-radius: 2px;
-}
-
-/* ==================== ID CARD ==================== */
-.id-card {
-  position: relative;
-  width: 300px;
-  height: 420px;
-  background: linear-gradient(
-    165deg,
-    #14141f 0%,
-    #1a1a2e 50%,
-    #0f0f1a 100%
-  );
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow:
-    0 30px 60px -15px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transform-style: preserve-3d;
-}
-
-.card-shine {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.card-glow {
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  background: linear-gradient(135deg, rgba(255, 107, 74, 0.4), rgba(255, 140, 90, 0.2), rgba(255, 107, 74, 0.4));
-  border-radius: 23px;
-  z-index: -1;
-  filter: blur(15px);
-  opacity: 0.5;
-}
-
-.card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 2;
-}
-
-/* ==================== PHOTO SECTION ==================== */
-.photo-section {
-  position: relative;
-  flex: 1;
-  background: linear-gradient(135deg, #ff6b4a 0%, #ff8c5a 100%);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.photo-frame {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.card-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  filter: grayscale(100%) contrast(1.1);
-  mix-blend-mode: multiply;
-}
-
-/* ==================== CARD INFO SECTION ==================== */
-.card-info {
-  padding: 20px 24px 16px;
-  background: linear-gradient(180deg, #14141f 0%, #0f0f1a 100%);
-}
-
-.role-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.role-title {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.role-title span {
-  font-size: clamp(22px, 3vw, 28px);
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #ffffff;
-  text-transform: uppercase;
-  line-height: 1.1;
-}
-
-/* ==================== BARCODE SECTION ==================== */
-.card-barcode {
-  padding: 12px 24px 20px;
-  background: #0f0f1a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.barcode-container {
-  display: flex;
-  justify-content: center;
-  gap: 1px;
-  padding: 6px 0;
-}
-
-.barcode-line {
-  height: 20px;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.barcode-text {
-  font-size: 8px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.3);
-  text-transform: uppercase;
-}
-
 /* ==================== DESCRIPTION (Below Card) ==================== */
 .hero-description {
   position: relative;
@@ -515,15 +296,6 @@
     font-size: 260px;
   }
 
-  .id-card {
-    width: 340px;
-    height: 480px;
-  }
-
-  .role-title span {
-    font-size: 32px;
-  }
-
   .hero-description {
     margin-top: 60px;
   }
@@ -556,15 +328,6 @@
     letter-spacing: -4px;
   }
 
-  .id-card {
-    width: 280px;
-    height: 380px;
-  }
-
-  .role-title span {
-    font-size: 24px;
-  }
-
   .hero-description {
     margin-top: 40px;
   }
@@ -592,31 +355,6 @@
   .hero-bottom {
     padding: 0 20px;
     bottom: 20px;
-  }
-
-  .id-card {
-    width: 260px;
-    height: 360px;
-  }
-
-  .id-card-container {
-      margin-top: -80px;
-  }
-
-  .card-info {
-    padding: 16px 20px 12px;
-  }
-
-  .role-title span {
-    font-size: 22px;
-  }
-
-  .card-barcode {
-    padding: 10px 20px 16px;
-  }
-
-  .lanyard-strap {
-    height: 200px;
   }
 
   .number-circle {
@@ -662,50 +400,6 @@
   .big-text {
     font-size: clamp(35px, 18vw, 70px);
     letter-spacing: -1px;
-  }
-
-  .id-card {
-    width: 240px;
-    height: 340px;
-  }
-
-  .card-info {
-    padding: 14px 18px 10px;
-  }
-
-  .role-label {
-    font-size: 10px;
-    margin-bottom: 6px;
-  }
-
-  .role-title span {
-    font-size: 20px;
-  }
-
-  .card-barcode {
-    padding: 8px 18px 14px;
-  }
-
-  /* Pull container up so card isn't too low */
-  .id-card-container {
-    margin-top: -120px;
-  }
-
-  .barcode-line {
-    height: 16px;
-  }
-
-  .barcode-text {
-    font-size: 7px;
-  }
-
-  .lanyard-strap {
-    height: 180px;
-    width: 32px;
-  }
-
-  .lanyard-text {
-    font-size: 7px;
   }
 
   .hero-bottom {
@@ -758,24 +452,6 @@
     font-size: 30px;
   }
 
-  .id-card {
-    width: 220px;
-    height: 310px;
-  }
-
-  .role-title span {
-    font-size: 18px;
-  }
-
-  .card-info {
-    padding: 12px 16px 8px;
-  }
-
-  .lanyard-strap {
-    height: 160px;
-    width: 28px;
-  }
-
   .hero-description {
     margin-top: 25px;
   }
@@ -791,15 +467,6 @@
     top: 80px;
   }
 
-  .id-card {
-    width: 240px;
-    height: 320px;
-  }
-
-  .lanyard-strap {
-    height: 40px;
-  }
-
   .hero-bottom {
     bottom: 20px;
   }
@@ -813,23 +480,6 @@
 @media (max-height: 500px) and (orientation: landscape) {
   .hero-greeting {
     top: 60px;
-  }
-
-  .id-card {
-    width: 200px;
-    height: 280px;
-  }
-
-  .lanyard-strap {
-    height: 30px;
-  }
-
-  .card-info {
-    padding: 10px 14px 8px;
-  }
-
-  .role-title span {
-    font-size: 16px;
   }
 
   .hero-bottom {
@@ -863,31 +513,4 @@
   .scroll-arrow {
     animation: none;
   }
-
-  .card-shine {
-    display: none;
-  }
-}
-
-/* ==================== HOVER EFFECTS ==================== */
-.id-card:hover .card-glow {
-  opacity: 0.7;
-  filter: blur(20px);
-  transition: all 0.4s ease;
-}
-
-.id-card:hover .card-photo {
-  filter: grayscale(80%) contrast(1.15);
-  transition: all 0.4s ease;
-}
-
-.photo-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background: linear-gradient(to top, #14141f, transparent);
-  pointer-events: none;
 }

@@ -78,6 +78,9 @@ const CustomCursor = () => {
       if (target.classList.contains('card-hover') || target.closest('.id-card')) {
         setCursorVariant('card');
         setIsHovering(true);
+
+        const text = target.closest('[data-cursor-text]')?.dataset.cursorText;
+        if (text) setHoverText(text);
       }
 
       // Images

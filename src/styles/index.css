@@ -18,6 +18,8 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  /* Keep the layout from shifting when scrolling is locked during the intro */
+  scrollbar-gutter: stable;
 }
 
 body {
